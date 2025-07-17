@@ -2,7 +2,7 @@ from typing import Final
 
 class SistemaBancario:
    __LIMITE_SAQUE: Final[int] = 3
-   __AGENCIA = Final[str] = '0001'
+   __AGENCIA: Final[str] = '0001'
    def __init__(self):
       self._saldo = 0
       self._extrato = {'saques': [], 'depositos': []}
@@ -68,7 +68,7 @@ class SistemaBancario:
    
    def listar_contas(self):
       for conta in self._contas:
-         print(f'Agência: {conta['agencia']} - Número: {conta['numero']} - Titular: {conta['usuario']['nome_completo']}')
+         print(f"Agência: {conta['agencia']} - Número: {conta['numero']} - Titular: {conta['usuario']['nome_completo']}")
 
    def saque(self, valor=0):
       excedeu_limite = valor > 500
