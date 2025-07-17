@@ -1,7 +1,7 @@
 from typing import Final
 
 class SistemaBancario:
-   # __LIMITE_SAQUE: Final[int] = 3
+   __LIMITE_SAQUE: Final[int] = 3
    def __init__(self):
       self._saldo = 0
       self._extrato = {'saques': [], 'depositos': []}
