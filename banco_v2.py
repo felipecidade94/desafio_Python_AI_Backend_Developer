@@ -6,6 +6,8 @@ class SistemaBancario:
       self._saldo = 0
       self._extrato = {'saques': [], 'depositos': []}
       self._numero_saques = 0
+      self._clientes = []
+      
 
    @property
    def limite_saque(self):
@@ -18,7 +20,7 @@ class SistemaBancario:
    def saque(self, valor=0):
       excedeu_limite = valor > 500
       excedeu_saldo = valor > self._saldo
-      excedeu_saque = self._numero_saques >= self.__LIMITE_SAQUE
+      excedeu_saque = self._numero_saques >= 3
       if not isinstance(valor, float):
          raise ValueError
       if excedeu_limite:
