@@ -70,12 +70,17 @@ class SistemaBancario:
       for conta in self._contas:
          print(f"Agência: {conta['agencia']} - Número: {conta['numero']} - Titular: {conta['usuario']['nome_completo']}")
 
-   def saque(self, valor=0):
+   def saque(self,cpf):
+      cpf = input('Informe o CPF (somente números)\n')
+      usuario = self.filtrar_usuarios(cpf)
+
+      if not usuario:
+         print('Usuário não encontrado!')
+         return
+      valor = float(input('Informe o valor do saque: '))
       excedeu_limite = valor > 500
       excedeu_saldo = valor > self._saldo
       excedeu_saque = self._numero_saques >= self.__LIMITE_SAQUE
-      if not isinstance(valor, float):
-         raise ValueError
       if excedeu_limite:
          print('Operação inválida! Não possível sacar um valor maior que R$ 500.00')
       elif excedeu_saldo:
@@ -89,9 +94,14 @@ class SistemaBancario:
          self._extrato['saques'].append(f'Saque de R$ {valor:.2f}')
          self.exibir_extrato()
 
-   def deposito(self, valor=0):
-      if not isinstance(valor, float):
-         raise ValueError
+   def deposito(self, cpf):
+      cpf = input('Informe o CPF (somente números)\n')
+      usuario = self.filtrar_usuarios(cpf)
+
+      if not usuario:
+         print('Usuário não encontrado!')
+         return
+      valor = float(input('Informe o valor do depósito: '))
       self._saldo += valor
       print(f'Depósito de R$ {valor:.2f} realizado com sucesso!')
       self._extrato['depositos'].append(f'Depósito de R$ {valor:.2f}\n')
@@ -118,11 +128,11 @@ class SistemaBancario:
          elif opcao == '2':
             self.criar_conta()
          elif opcao == '4':
-            valor = float(input('Informe o valor do depósito: '))
-            self.deposito(valor)
+            cpf = input('Informe o CPF do titular da conta (apenas números)\n')
+            self.deposito(cpf)
          elif opcao == '5':
-            valor = float(input('Informe o valor do saque: '))
-            self.saque(valor)
+            cpf = input('Informe o CPF do titular da conta (apenas números)\n')
+            self.saque(cpf)
          elif opcao == '6':
             self.exibir_extrato()
          elif opcao == '7':
